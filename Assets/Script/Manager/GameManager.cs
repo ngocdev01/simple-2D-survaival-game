@@ -2,86 +2,273 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : SingletonObject<GameManager>
 {
+ 
     public GameObject player;
-    public GameObject pauseMenu;
-    public HealthBar healthBar;
-    public GameObject waveStatus;
-    public GameObject waveNumber;
-    public GameObject pickUpMenu;
-    public GameObject gameOverPanel;
-    public GameObject gameWinPanel;
-    public GameObject statMenu;
-    public bool isPaused;
-
     public GameObject[] enemies;
     public GameObject[] weaponDrop;
     public GameObject potionDrop;
+    private Camera mainCamera;
 
     public List<GameObject> clearList;
     private StatModifier currentBuff;
 
-    private float lastClearTime;
-    private float breakTime = 10;
+    private float timerPivot;
+    public float breakTime = 5f;
+    public float prepareTime = 5f;
 
+    [Range(0,100f)]
+    public float dropRate;
+
+
+    public int waveNumber;
     public int currentWave;
-    public bool hasSaved;
     public BoxCollider2D playArea;
-    public bool StatSpecting;
-
+ 
     public LayerMask wall;
     public int curerentEnemyNumber;
     public int enemyNumber;
+    public int enemyAddEachWave;
+
+
+    public  Action OnInitStateMachine;
+    public GameStateMachine waveStateMachine { get; private set; }
+    public GameStateMachine gameStateMachine { get; private set; }
+   
     
-    public void GameOver()
+
+
+
+    #region State
+    public GameState pauseState;
+    public GameState victoryState;
+    public GameState gameOverState;
+    public GameState playingState;
+    public GameState statState;
+   
+
+    public GameState waveBreakState;
+    public GameState wavePrepareState;
+    public GameState wavePlayingState;
+   
+    #endregion
+    public Camera MainCamera
     {
-        gameOverPanel.SetActive(true);
+        get
+        {
+            if (mainCamera == null)
+            {
+                mainCamera = FindFirstObjectByType<Camera>();
+            }
+            return mainCamera;
+        }
+
+    }
+    private void Awake()
+    {
+        Time.timeScale = 1;
+        clearList = new List<GameObject>();
+        playArea.gameObject.SetActive(false);
+
+        /*
+        if (hasSaved)
+        {
+            //TODO: SaveSystem;
+        }
+        */
+        waveStateMachine = new();
+        gameStateMachine = new();
+
+        //State
+        victoryState = new();
+        statState = new();
+        gameOverState = new();
+        pauseState = new();
+        playingState = new();
+
+        //WaveState
+        waveBreakState = new();
+        wavePrepareState = new();
+        wavePlayingState = new();
+
+
+        //Playing
+        playingState.OnStateExit += Pause;
+        playingState.OnStateEnter += Resume;
+        playingState.OnStateUpdate += waveStateMachine.OnStateUpdate;
+        playingState.OnStateUpdate += ()
+            => StateKeyDownTransition(KeyCode.Escape, pauseState, gameStateMachine);
+        playingState.OnStateUpdate += ()
+            => StateKeyDownTransition(KeyCode.Tab, statState, gameStateMachine);
+        playingState.OnStateUpdate += WinStateTransition;
         
+
+        //Pause
+        pauseState.OnStateUpdate += ()
+            => StateKeyDownTransition(KeyCode.Escape, playingState, gameStateMachine);
+
+        //Stat
+        statState.OnStateUpdate += ()
+           => StateKeyDownTransition(KeyCode.Escape, playingState, gameStateMachine);
+        statState.OnStateUpdate += ()
+           => StateKeyDownTransition(KeyCode.Tab, playingState, gameStateMachine);
+        
+        //Wave
+        {
+
+            //WaveBreak
+            waveBreakState.OnStateEnter += StateTimerStart;
+            waveBreakState.OnStateUpdate += ()
+                => StateTimerTransition(breakTime, wavePrepareState, waveStateMachine);
+           
+
+            //WavePrepare
+            wavePrepareState.OnStateEnter += StateTimerStart;
+            wavePrepareState.OnStateEnter += OnWavePrepare;
+            wavePrepareState.OnStateUpdate += ()
+                => StateTimerTransition(prepareTime, wavePlayingState, waveStateMachine);
+           
+
+            //WavePlaying
+            wavePlayingState.OnStateEnter += WaveStart;
+            wavePlayingState.OnStateUpdate += ()
+                => StateForceTransition(IsClear(), waveBreakState, waveStateMachine);
+        }
+
+        //TODO: Convert to event
+        player.GetComponent<PlayerController>().HP.OnStatReachMinValue += (DynamicStat HP)
+           => gameStateMachine.SetState(gameOverState);
+
+        OnInitStateMachine?.Invoke();
+
+
+       
+
     }
 
-    public void LoadMainMenu()
+    private void Start()
     {
-        SceneManager.UnloadSceneAsync("Play");
-        SceneManager.LoadScene("Menu");
-        
+        StarNewGame();
+        waveStateMachine.Init(wavePrepareState);
+        gameStateMachine.Init(playingState);
+       
     }
-    private void StartNewWave()
+    private void Update()
+    {
+
+        gameStateMachine.OnStateUpdate();
+
+    }
+
+
+
+    #region State Control General
+    // TODO: Maybe move this to GameStateMachine as static 
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+    }
+
+    public void Resume()
+    {
+
+        Time.timeScale = 1f;
+    }
+
+    public float GetTimeToEndState(float targetTime) => 
+        Mathf.Abs(targetTime - (Time.time-timerPivot));
+
+    private void StateTimerStart()
+    {
+        timerPivot = Time.time;
+    }
+    private void StateTimerTransition(float time, GameState target, GameStateMachine stateMachine)
+    {
+        if (TimerCheck(time))
+        {
+            stateMachine.SetState(target);
+        }
+    }
+
+    private void StateKeyDownTransition(KeyCode keyCode, GameState target, GameStateMachine stateMachine)
+    {
+        if(Input.GetKeyDown(keyCode))
+        {
+            stateMachine.SetState(target);
+        }
+    }
+    private void StateForceTransition(bool condition, GameState target, GameStateMachine stateMachine)
+    {
+        if(condition)
+        {
+            stateMachine.SetState(target);
+        }
+    }
+
+    //TODO: Convert to use after wave clear 
+    private void WinStateTransition()
+    {
+        if(IsClear() && currentWave == waveNumber)
+        {
+            gameStateMachine.SetState(victoryState);
+        }
+    }
+    
+    #endregion
+
+
+    #region Wave State Control
+
+
+    private bool TimerCheck(float targetTime) => (Time.time - timerPivot >= targetTime);
+    private bool IsClear() => curerentEnemyNumber <= 0;
+
+    void OnWavePrepare()
     {
         currentWave++;
-        enemyNumber = currentWave * 5;
+        enemyNumber = currentWave * enemyAddEachWave;
         curerentEnemyNumber = enemyNumber;
-        StartCoroutine(WaitNewWave(Condition));
 
-    }
-
-    IEnumerator WaitNewWave(Func<bool> con)
-    {
-        yield return new WaitUntil(con);
         foreach (var item in clearList)
         {
             if (item != null)
                 Destroy(item);
         }
-        var txt  = waveNumber.GetComponentInChildren<TextMeshProUGUI>();
-        txt.text = "Wave " + currentWave;
-        StartCoroutine(ShowUIByTime(3f, waveNumber));
-        GetWaveBuff();
-        InstantiateEnemy();
     }
 
-    private bool Condition() => Time.time - lastClearTime > breakTime;
+    private void WaveStart()
+    {
+     
+        GetWaveBuff();
+        InstantiateEnemy();
+
+    }
+    void StarNewGame()
+    {
+        currentWave = 0;
+    }
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("Menu");
+
+    }
+ 
+
+    
+
     private void GetWaveBuff()
     {
         currentBuff = new StatModifier();
         currentBuff.value = currentWave / 2;
 
     }
-        
+
     void InstantiateEnemy()
     {
         float halfHeight = playArea.size.y / 2;
@@ -89,13 +276,13 @@ public class GameManager : SingletonObject<GameManager>
         for (int i = 0; i < curerentEnemyNumber; i++)
         {
             Vector2 spawnPos;
-            
+
             do {
-                float RandX = UnityEngine.Random.Range(playArea.transform.position.x- halfWidth, playArea.transform.position.x + halfWidth);
+                float RandX = UnityEngine.Random.Range(playArea.transform.position.x - halfWidth, playArea.transform.position.x + halfWidth);
                 float RandY = UnityEngine.Random.Range(playArea.transform.position.y - halfHeight, playArea.transform.position.y + halfHeight);
                 spawnPos = new Vector2(RandX, RandY);
             }
-            while (Physics2D.OverlapCircle(spawnPos, 0.3f,wall));
+            while (Physics2D.OverlapCircle(spawnPos, 0.3f, wall));
 
 
             int index = UnityEngine.Random.Range(0, enemies.Length);
@@ -109,143 +296,63 @@ public class GameManager : SingletonObject<GameManager>
         }
     }
 
-    void GameWin()
-    {
-        isPaused = true;
-        Time.timeScale = 0;
-        gameOverPanel.SetActive(true);
+ 
 
-    }
-    
     void OnEnemyDead(Enemy enemy)
     {
         curerentEnemyNumber--;
         if (curerentEnemyNumber <= 0)
         {
-            WaveClear(enemy.transform.position);
-            StartNewWave();
+            WaveClear(enemy.transform.position);                 
         }
+        float rate = UnityEngine.Random.Range(0f, 100f);
+        if (rate <= dropRate)
+            DropItem(enemy.transform.position);
     }
 
     private void WaveClear(Vector2 pos)
     {
-        if(currentWave==5)
+        /*TODO: add Boss maybe
+        if (currentWave % 5 == 0)
         {
-
+           
         }
+        */
+       
+        DropItem(pos);
+    }
+
+    private void DropItem(Vector2 pos)
+    {
         GameObject dropItem;
-        StartCoroutine(ShowUIByTime(3f, waveStatus));
-        int dropRate = UnityEngine.Random.Range(0, 2);
-        if(dropRate == 0)
+        int dropRate = UnityEngine.Random.Range(0, 3);
+        if (dropRate == 0)
         {
+            //TODO : use ObjectPool instead
             dropItem = Instantiate(potionDrop, pos, Quaternion.identity);
             dropItem.GetComponent<Potion>().healValue = UnityEngine.Random.Range(5, 10);
         }
         else
         {
-            int weaponIndex = UnityEngine.Random.Range(0,weaponDrop.Length);
-            dropItem = Instantiate( weaponDrop[weaponIndex],pos,Quaternion.identity);
+            //TODO : use ObjectPool instead
+            int weaponIndex = UnityEngine.Random.Range(0, weaponDrop.Length);
+            dropItem = Instantiate(weaponDrop[weaponIndex], pos, Quaternion.identity);
         }
+        Debug.Log(dropItem);
         clearList.Add(dropItem);
-        lastClearTime = Time.time;
-    }
-    IEnumerator ShowUIByTime(float time,GameObject gameObject )
-    {    
-        gameObject.SetActive(true);
-        yield return new WaitForSeconds(time);
-        gameObject.SetActive(false);
-    }
-    private void Awake()
-    {
-        Time.timeScale = 1;
-        clearList = new List<GameObject>();
-        playArea.gameObject.SetActive(false);
-        if (!hasSaved)
-        {
-            StarNewGame();
-        }
-            
-    }
-
-    void StarNewGame()
-    {
-        currentWave = 1;
-        enemyNumber = 5;
-        curerentEnemyNumber = 5;
-         GetWaveBuff();
-        InstantiateEnemy();
-    }
-
-    void NewWave()
-    {
-
-    }
-
-    private Camera mainCamera;
-    public Camera MainCamera
-    {
-        get
-        {
-            if(mainCamera==null)
-            {
-                mainCamera = FindFirstObjectByType<Camera>();
-            }
-            return mainCamera;
-        }
-        
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) )
-        {
-            Pause();
-        }
-        else if (Input.GetKeyDown(KeyCode.Tab) )
-        {
-            Stat();
-        }
-               
-       
-    }
-    public void Stat()
-    {
-        if (!StatSpecting)
-        {
-            StatSpecting = true;
-            statMenu.SetActive(true);
-            Time.timeScale = 0;
-            statMenu.GetComponent<StatMenu>().LoadStat(player.GetComponent<PlayerController>());
-        }
-        else
-        {
-            StatSpecting = false;
-            statMenu.SetActive(false);
-            Time.timeScale = 1;
-        }
-    }
-    public void Pause()
-    {
-        if(!isPaused)
-        {
-            isPaused = true;
-            pauseMenu.SetActive(true);
-            Time.timeScale = 0;
-        }
-    }
-
-    public void Resume()
-    {
-        if (isPaused)
-        {
-            isPaused = false;
-            pauseMenu.SetActive(false);
-            Time.timeScale = 1f;
-        }
     }
 
 
+
+
+
+
+    #endregion
+
+  
 
 
 
 }
+
+

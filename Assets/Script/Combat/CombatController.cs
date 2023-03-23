@@ -46,11 +46,11 @@ public class CombatController : MonoBehaviour, IDamageable
 
     public void GetProjectilePool(string GUID, GameObject prefab)
     {
-        pool = ObjectPool.Instance.TryGetPool(GUID, prefab);
+        pool = GameObjectPool.Instance.TryGetPool(GUID, prefab);
     }
     public void ReleaseProjectilePool(string GUID)
     {
-        ObjectPool.Instance.RequestDisposePool(GUID);
+        GameObjectPool.Instance.RequestDisposePool(GUID);
     }
 
     public void OnAttackStart(AttackBurst attackBurst, Vector2 attackDir, float acc)
@@ -90,17 +90,18 @@ public class CombatController : MonoBehaviour, IDamageable
         isPerormingAttack = false;
     }
 
-    void OnAttackHit(ProjectTile projectTile,GameObject gameObject)
+    void OnAttackHit(ProjectTile projectTile, GameObject gameObject,ObjectPool<GameObject> pool)
     {
-      
-        if(gameObject.TryGetComponent(out IDamageable damageable))
+
+        if (gameObject.TryGetComponent(out IDamageable damageable))
         {
             damageable.GetDamage(ATK.Value);
         }
         pool.Release(projectTile.gameObject);
+
     }
 
-    void OnOutOfRange(ProjectTile projectTile)
+    void OnOutOfRange(ProjectTile projectTile, ObjectPool<GameObject> pool)
     {
         pool.Release(projectTile.gameObject);
     }
@@ -114,7 +115,8 @@ public class CombatController : MonoBehaviour, IDamageable
             var rotate =Mathf.Rad2Deg * Mathf.Atan2(attackDir.y, attackDir.x) + angle;
             obj.Init(attackPoint.transform.position, Quaternion.Euler(0, 0, rotate),
                BulletSpeed.Value, ATKRange.Value, targetLayer);
-            obj.OnHit += OnAttackHit;
+            obj.pool =  pool;
+            obj.OnHit +=  OnAttackHit;
             obj.OnOutOfRange+= OnOutOfRange;
         }
     }

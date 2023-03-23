@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Pool;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent (typeof(Collider2D))]
@@ -15,9 +15,9 @@ public class ProjectTile : MonoBehaviour
     private Collider2D col;
     private Rigidbody2D rb2d;
 
-    public Action<ProjectTile,GameObject> OnHit;
-    public Action<ProjectTile> OnOutOfRange;
-    
+    public Action<ProjectTile,GameObject,ObjectPool<GameObject>> OnHit;
+    public Action<ProjectTile, ObjectPool<GameObject>> OnOutOfRange;
+    public  ObjectPool<GameObject>  pool;
    
 
     private void Awake()
@@ -47,7 +47,7 @@ public class ProjectTile : MonoBehaviour
     {
         if(((Vector2)transform.position-startPos).sqrMagnitude>range*range)
         {
-            OnOutOfRange?.Invoke(this);
+            OnOutOfRange?.Invoke(this,pool);
         }
         rb2d.MovePosition(transform.position + transform.right * velocity * Time.deltaTime);
     }
@@ -62,7 +62,7 @@ public class ProjectTile : MonoBehaviour
        
         if ((1 << collision.gameObject.layer & targetLayer) != 0)
         {         
-             OnHit?.Invoke(this, collision.gameObject);
+             OnHit?.Invoke(this, collision.gameObject,pool);
         }
     }
    

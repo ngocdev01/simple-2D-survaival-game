@@ -10,6 +10,9 @@ using UnityEngine.Pool;
 [RequireComponent(typeof(CharacterController2D))]
 public class Enemy : MonoBehaviour
 {
+
+
+    //TODO: Use state machine
     protected Animator animator;
     protected CharacterController2D characterController;
     protected SpriteRenderer spriteRenderer;
@@ -87,6 +90,7 @@ public class Enemy : MonoBehaviour
         HP.OnStatReachMinValue += OnZeroHP;
         combatController.OnHit += OnGetHit;
         combatController.InitController(ATK, ATKSpeed, Accuracy, ATKRange,BulletSpeed, HP, targetLayer);
+        HP.OnValueChanged += GetDamage;
       
     }
 
@@ -155,10 +159,9 @@ public class Enemy : MonoBehaviour
         
     }
 
-    public void GetDamage(float amout)
+    public void GetDamage(DynamicStat hp)
     {
         animator.SetTrigger("Hit");
-        HP.Value -= amout;
     }
     protected virtual void Chase()
     {
@@ -181,7 +184,7 @@ public class Enemy : MonoBehaviour
 
     private void UpdateDirection(Vector2 moveDir)
     {
-        if (InRange)
+        if (InRange || InAttackRange)
         {
             bool isFlip = baseSpriteIsLeft ? (moveDir.x > 0) : (moveDir.x < 0); ;
             if (isFlip != isFlipped)

@@ -12,6 +12,9 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
+
+
+    //TODO: Use state machine
     private CharacterController2D characterController;
     private CombatController combatController;
     private InputController inputController;
@@ -57,38 +60,30 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         combatController = GetComponentInChildren<CombatController>();
         animator = GetComponent<Animator>();
-        healthBar = GameManager.Instance.healthBar;
-    }
 
-    private void Start()
-    {
-        HPMax =new Stat( baseStat.GetStatValue(StatName.HP));
+        HPMax = new Stat(baseStat.GetStatValue(StatName.HP));
         HP = new DynamicStat(HPMax);
         ATK = new Stat(baseStat.GetStatValue(StatName.ATK));
         ATKSpeed = new Stat(baseStat.GetStatValue(StatName.ATKSPEED));
         Speed = new Stat(baseStat.GetStatValue(StatName.SPEED));
         BulletSpeed = new Stat(baseStat.GetStatValue(StatName.BULLETSPEED));
         ATKRange = new Stat(baseStat.GetStatValue(StatName.ATKRANGE));
-        GameManager.Instance.healthBar.SetMaxHelth(HPMax.Value);
-        GameManager.Instance.healthBar.SetHelth(HP.Value);
 
-        HPMax.OnStatChanged += OnMaxHpChange;
+    }
+
+    private void Start()
+    {
+      
+   
+
+    
         HP.OnStatReachMinValue += OnZeroHP;
-        HP.OnValueChanged += OnHPChange;
         combatController.InitController(ATK, ATKSpeed, Accuracy, ATKRange,BulletSpeed, HP, targetLayerMask);
         weapon.OnEquip(combatController, weaponHolder);
 
 
     }
-    void OnHPChange(DynamicStat hp)
-    {
-        GameManager.Instance.healthBar.SetHelth(hp.Value);
-    }
-
-    void OnMaxHpChange(Stat stat)
-    {
-        GameManager.Instance.healthBar.SetMaxHelth(stat.Value);
-    }
+   
     void  OnZeroHP(DynamicStat hp)
     {
         OnDead();
@@ -134,7 +129,7 @@ public class PlayerController : MonoBehaviour
        
         animator.SetBool("Dead", true);
 
-        GameManager.Instance.GameOver();
+        //GameManager.Instance.GameOver();
 
     }
 

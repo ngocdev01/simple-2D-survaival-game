@@ -442,7 +442,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 386
+        y: 387
         width: 32
         height: 49
       alignment: 7
@@ -466,8 +466,8 @@ TextureImporter:
         y: 451
         width: 26
         height: 52
-      alignment: 9
-      pivot: {x: 0.4326078, y: 0.2583407}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -484,9 +484,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 270
-        y: 457
+        y: 478
         width: 5
-        height: 26
+        height: 5
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -508,8 +508,8 @@ TextureImporter:
         y: 355
         width: 26
         height: 66
-      alignment: 9
-      pivot: {x: 0.5245778, y: 0.16943637}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -527,7 +527,7 @@ TextureImporter:
         serializedVersion: 2
         x: 227
         y: 291
-        width: 26
+        width: 48
         height: 38
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -547,9 +547,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 270
-        y: 361
+        y: 396
         width: 5
-        height: 40
+        height: 5
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -651,12 +651,12 @@ TextureImporter:
       name: TX Props Gravestone C
       rect:
         serializedVersion: 2
-        x: 288
+        x: 289
         y: 232
         width: 30
         height: 29
-      alignment: 9
-      pivot: {x: 0.5621236, y: 0.38559487}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -697,8 +697,8 @@ TextureImporter:
         y: 389
         width: 64
         height: 36
-      alignment: 9
-      pivot: {x: 0.4908738, y: 0.42183176}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -718,8 +718,8 @@ TextureImporter:
         y: 320
         width: 27
         height: 32
-      alignment: 9
-      pivot: {x: 0.44592682, y: -0.0006246567}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -739,8 +739,8 @@ TextureImporter:
         y: 256
         width: 27
         height: 32
-      alignment: 9
-      pivot: {x: 0.5602985, y: 0.0005931854}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1010,10 +1010,10 @@ TextureImporter:
         serializedVersion: 2
         x: 445
         y: 419
-        width: 37
+        width: 46
         height: 73
-      alignment: 9
-      pivot: {x: 0.484215, y: 0.2240287}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1054,8 +1054,8 @@ TextureImporter:
         y: 261
         width: 32
         height: 77
-      alignment: 9
-      pivot: {x: 0.46006107, y: 0.24066876}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1075,8 +1075,8 @@ TextureImporter:
         y: 261
         width: 32
         height: 57
-      alignment: 9
-      pivot: {x: 0.52995396, y: 0.28587636}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1096,8 +1096,8 @@ TextureImporter:
         y: 160
         width: 32
         height: 46
-      alignment: 9
-      pivot: {x: 0.51455975, y: 0.32412255}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1114,11 +1114,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 353
-        y: 171
+        y: 163
         width: 94
-        height: 72
-      alignment: 9
-      pivot: {x: 0.4925297, y: 0.3754908}
+        height: 80
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1138,8 +1138,8 @@ TextureImporter:
         y: 241
         width: 5
         height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1156,11 +1156,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 337
-        y: 241
+        y: 234
         width: 5
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 12
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1180,8 +1180,8 @@ TextureImporter:
         y: 234
         width: 5
         height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1281,9 +1281,9 @@ TextureImporter:
       name: TX Props Wooden Gate
       rect:
         serializedVersion: 2
-        x: 29
+        x: 27
         y: 359
-        width: 37
+        width: 41
         height: 50
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -1304,7 +1304,7 @@ TextureImporter:
         serializedVersion: 2
         x: 29
         y: 293
-        width: 37
+        width: 9
         height: 53
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -1324,9 +1324,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 3
-        y: 40
+        y: 38
         width: 57
-        height: 42
+        height: 44
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1346,7 +1346,7 @@ TextureImporter:
         serializedVersion: 2
         x: 420
         y: 104
-        width: 58
+        width: 55
         height: 49
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -1357,6 +1357,153 @@ TextureImporter:
       bones: []
       spriteID: f9f70ad008ebefc4bb5915052e8339ff
       internalID: 21300164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TX Props_0
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 457
+        width: 5
+        height: 19
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78a00e91037d1c14091d6fc6bf863424
+      internalID: 1646052360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TX Props_1
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 389
+        width: 5
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f21397a740af3543be99087673e32bc
+      internalID: 726906286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TX Props_2
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 382
+        width: 5
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75c76624650e22342a1150361f1a0ecc
+      internalID: 1147823630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TX Props_3
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 375
+        width: 5
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c97a2cfe5beb5d645b03f3a8d994894c
+      internalID: 727551341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TX Props_4
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 368
+        width: 5
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c89b934e86a41ce4d880719c03c41c6e
+      internalID: -1092683291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TX Props_5
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 361
+        width: 5
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89e004dafc0aa444695d3766ae4ebd8e
+      internalID: -704407533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TX Props_6
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 293
+        width: 9
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8d85ed47ce58604885c8b0eacc87a33
+      internalID: 644246890
       vertices: []
       indices: 
       edges: []
@@ -1375,13 +1522,17 @@ TextureImporter:
       TX Props Well: 21300164
       TX Props Chest Opened: 21300040
       TX Props Pot B: 21300092
+      TX Props_0: 1646052360
       TX Props Barrel: 21300066
       TX Props Rune Pillar X3: 21300058
       TX Props Altar Rune 3: 21300148
+      TX Props_4: -1092683291
       TX Props Wooden Gate Opened: 21300160
       TX Props Rune Pillar Broken: 21300060
+      TX Props_5: -704407533
       TX Props Crate Small: 21300038
       TX Props Pot C: 21300094
+      TX Props_6: 644246890
       TX Props Stone T1: 21300102
       TX Props Stone T7: 21300162
       TX Props Pot A: 21300090
@@ -1395,6 +1546,7 @@ TextureImporter:
       TX Props Stone T3: 21300106
       TX Props Brick T1: 21300152
       TX Props Altar Rune 1: 21300144
+      TX Props_1: 726906286
       TX Props Crate: 21300034
       TX Props Stone Bench E: 21300100
       TX Props Rune Pillar Broken Glow: 21300064
@@ -1404,6 +1556,7 @@ TextureImporter:
       TX Props Altar Rune 2: 21300146
       TX Props Cube: 21300036
       TX Props Stone Coffin V: 21300076
+      TX Props_3: 727551341
       TX Props Gravestone B: 21300070
       TX Props Gravestone C: 21300072
       TX Props Rune Pillar X2: 21300042
@@ -1412,6 +1565,7 @@ TextureImporter:
       TX Props Stone Lantern: 21300116
       TX Props Chest: 21300000
       TX Props Stone Coffin H: 21300078
+      TX Props_2: 1147823630
       TX Props Statue: 21300114
       TX Props Brick T3: 21300156
       TX Props Stone T5: 21300110

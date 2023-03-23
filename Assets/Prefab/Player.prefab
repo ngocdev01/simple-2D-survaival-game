@@ -126,9 +126,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.388288}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.11171201
+  m_Radius: 0.15165895
 --- !u!210 &1131068187431290085
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -201,6 +201,31 @@ MonoBehaviour:
   baseStat: {fileID: 11400000, guid: 6c74035743c5b02498bc452108bd9a2a, type: 2}
   weaponHolder: {fileID: 1131068187467737358}
   weapon: {fileID: 1671168686511370878}
+  ATK:
+    statName: 0
+    baseValue: 0
+  HPMax:
+    statName: 0
+    baseValue: 0
+  Speed:
+    statName: 0
+    baseValue: 0
+  ATKSpeed:
+    statName: 0
+    baseValue: 0
+  Accuracy:
+    statName: 0
+    baseValue: 0
+  ATKRange:
+    statName: 0
+    baseValue: 0
+  BulletSpeed:
+    statName: 0
+    baseValue: 0
+  HP:
+    statBaseValue:
+      statName: 0
+      baseValue: 0
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -228,7 +253,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1131068187467737357}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.041, y: -0.197, z: 0}
+  m_LocalPosition: {x: -0.03, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -283,7 +308,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.030712098, y: -0.061424077}
+  m_Offset: {x: -0.03, y: 0.34}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -294,7 +319,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.48228258, y: 0.87715185}
+  m_Size: {x: 0.5, y: 0.87}
   m_EdgeRadius: 0
 --- !u!114 &1131068188371287427
 MonoBehaviour:
