@@ -21325,6 +21325,7 @@ MonoBehaviour:
   clearList: []
   breakTime: 10
   prepareTime: 5
+  dropRate: 66.6
   waveNumber: 5
   currentWave: 1
   playArea: {fileID: 2092133654}

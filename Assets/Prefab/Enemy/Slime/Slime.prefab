@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e832b61d8e9d3a9418db39e024e1e878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectTile: {fileID: 4234226227966821993, guid: 206a9a9a26a532e44871968d8eca724a,
+  projectTile: {fileID: 4234226227966821993, guid: 829f374a35b28864daa7ab75d11a48ed,
     type: 3}
   combatController: {fileID: 34931509954019812}
   detectRange: 9.19
