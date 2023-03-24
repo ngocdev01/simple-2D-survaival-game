@@ -39,7 +39,7 @@ public class MenuController : MonoBehaviour
         gameManager.pauseState.OnStateEnter += () => pauseMenu.SetActive(true);
         gameManager.pauseState.OnStateExit += () => pauseMenu.SetActive(false);
 
-        gameManager.statState.OnStateEnter += () => statMenu.SetActive(true);
+        gameManager.statState.OnStateEnter += () => { statMenu.SetActive(true); SetStat(); };
         gameManager.statState.OnStateExit += () => statMenu.SetActive(false);
 
         gameManager.gameOverState.OnStateEnter += () => gameOverPanel.SetActive(true);
@@ -77,6 +77,13 @@ public class MenuController : MonoBehaviour
     private void SetHeathBarMax(Stat hp)
     {
         healthBar.SetMaxHelth(hp.Value);
+    }
+
+    private void SetStat()
+    {
+        //TODO: Cache this
+        var player = GameManager.Instance.player.GetComponent<PlayerController>();
+        statMenu.GetComponent<StatMenu>().LoadStat(player);
     }
  
     private void NewWaveWarn()

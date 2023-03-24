@@ -60,6 +60,8 @@ public class CombatController : MonoBehaviour, IDamageable
         attackNumber = attackBurst.bustTime;
 
         isPerormingAttack = true;
+
+        //TODO: Use timer instead
         StartCoroutine(burstCoroutine(attackBurst, new WaitForSeconds(1 / 10f), acc));
 
     }

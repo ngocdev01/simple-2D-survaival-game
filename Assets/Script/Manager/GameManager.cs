@@ -114,6 +114,7 @@ public class GameManager : SingletonObject<GameManager>
             => StateKeyDownTransition(KeyCode.Escape, playingState, gameStateMachine);
 
         //Stat
+       
         statState.OnStateUpdate += ()
            => StateKeyDownTransition(KeyCode.Escape, playingState, gameStateMachine);
         statState.OnStateUpdate += ()
