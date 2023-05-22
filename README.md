@@ -1,6 +1,6 @@
 # simple-2D-survaival-game
 Simple 2D survival game
-
+made in 2 days
 
 
 
